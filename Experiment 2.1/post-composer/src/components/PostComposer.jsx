@@ -54,7 +54,7 @@ function PostComposer() {
 
   return (
     <div className="container">
-      <h1>🚀 Social Media Post Composer</h1>
+      <h1>🚀 Redux Toolkit Project</h1>
 
       <label>Select Platform</label>
 
