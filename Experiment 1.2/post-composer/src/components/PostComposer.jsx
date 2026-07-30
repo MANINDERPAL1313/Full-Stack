@@ -7,7 +7,7 @@ import {
   setPlatform,
   saveDraft,
   deleteDraft,
-} from "../store/postsSlice";
+} from "../features/posts/postSlice";
 
 import {
   selectPost,
@@ -15,7 +15,7 @@ import {
   selectDrafts,
   selectTotalDrafts,
   selectLongDrafts,
-} from "../selectors/postsSelector";
+} from "../features/posts/postsSelector";
 
 function PostComposer() {
   const dispatch = useDispatch();
