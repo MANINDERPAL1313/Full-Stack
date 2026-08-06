@@ -1,28 +1,80 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
-function Admin() {
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import Admin from "./pages/Admin";
+import Editor from "./pages/Editor";
+import Viewer from "./pages/Viewer";
+import Unauthorized from "./pages/Unauthorized";
+
+function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setUser(JSON.parse(token));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h1>👑 Admin Panel</h1>
+    <Routes>
+      <Route path="/" element={<Login onLogin={setUser} />} />
 
-        <p>Welcome Admin</p>
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute
+            user={user}
+            allowedRoles={["Admin", "Editor", "Viewer"]}
+          >
+            <Dashboard user={user} onLogout={handleLogout} />
+          </ProtectedRoute>
+        }
+      />
 
-        <button>Add User</button>
-        <br /><br />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute user={user} allowedRoles={["Admin"]}>
+            <Admin />
+          </ProtectedRoute>
+        }
+      />
 
-        <button>Delete User</button>
-        <br /><br />
+      <Route
+        path="/editor"
+        element={
+          <ProtectedRoute user={user} allowedRoles={["Editor"]}>
+            <Editor />
+          </ProtectedRoute>
+        }
+      />
 
-        <button>Settings</button>
-        <br /><br />
+      <Route
+        path="/viewer"
+        element={
+          <ProtectedRoute user={user} allowedRoles={["Viewer"]}>
+            <Viewer />
+          </ProtectedRoute>
+        }
+      />
 
-        <Link to="/dashboard">
-          <button>Back to Dashboard</button>
-        </Link>
-      </div>
-    </div>
+      <Route
+        path="/unauthorized"
+        element={<Unauthorized />}
+      />
+    </Routes>
   );
 }
 
-export default Admin;
+export default App;
