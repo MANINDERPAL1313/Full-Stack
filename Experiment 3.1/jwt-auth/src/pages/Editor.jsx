@@ -1,20 +1,15 @@
 import { Link } from "react-router-dom";
 
-function Admin() {
+function Editor() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>👑 Admin Panel</h1>
+        <h1>✍️ Editor Panel</h1>
 
-        <p>Welcome Admin</p>
-
-        <button>Add User</button>
+        <button>Edit Post</button>
         <br /><br />
 
-        <button>Delete User</button>
-        <br /><br />
-
-        <button>Settings</button>
+        <button>Publish Post</button>
         <br /><br />
 
         <Link to="/dashboard">
@@ -25,4 +20,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default Editor;
