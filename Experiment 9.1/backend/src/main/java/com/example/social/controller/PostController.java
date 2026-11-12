@@ -1,0 +1,6 @@
+package com.example.social.controller;
+import com.example.social.dto.CreatePostRequest;import com.example.social.model.SocialPost;import com.example.social.repository.*;import jakarta.validation.Valid;import org.springframework.security.core.Authentication;import org.springframework.web.bind.annotation.*;import java.util.*;
+@RestController @RequestMapping("/api/posts") public class PostController{private final PostRepository posts;private final UserRepository users;public PostController(PostRepository p,UserRepository u){posts=p;users=u;}
+ @GetMapping public List<Map<String,Object>> list(Authentication a){return posts.findByOwnerEmailOrderByCreatedAtDesc(a.getName()).stream().map(this::view).toList();}
+ @PostMapping public Map<String,Object> create(@Valid @RequestBody CreatePostRequest r,Authentication a){var u=users.findByEmail(a.getName()).orElseThrow();return view(posts.save(new SocialPost(r.content(),r.scheduledAt(),u)));}
+ private Map<String,Object> view(SocialPost p){Map<String,Object> m=new LinkedHashMap<>();m.put("id",p.getId());m.put("content",p.getContent());m.put("status",p.getStatus());m.put("scheduledAt",p.getScheduledAt());m.put("createdAt",p.getCreatedAt());return m;}}

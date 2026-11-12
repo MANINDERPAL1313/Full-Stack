@@ -1,0 +1,1 @@
+package com.example.social.dto; import jakarta.validation.constraints.*; import java.time.LocalDateTime; public record CreatePostRequest(@NotBlank @Size(max=2000) String content, LocalDateTime scheduledAt){}
