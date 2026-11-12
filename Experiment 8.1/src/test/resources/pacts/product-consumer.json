@@ -1,0 +1,5 @@
+{
+ "consumer":{"name":"web-client"},"provider":{"name":"product-service"},"interactions":[
+  {"description":"retrieve all products","providerStates":[{"name":"products exist"}],"request":{"method":"GET","path":"/api/products"},"response":{"status":200,"headers":{"Content-Type":"application/json"},"body":[]}}
+ ],"metadata":{"pactSpecification":{"version":"3.0.0"},"pact-jvm":{"version":"4.6.17"}}
+}
